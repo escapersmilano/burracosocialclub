@@ -16,7 +16,7 @@
     <style>
 
       h1 {
-                font-size: 4.5rem !important;
+        font-size: 4.5rem !important;
       }
       
       .bd-placeholder-img {
@@ -26,6 +26,7 @@
         -moz-user-select: none;
         user-select: none;
       }
+      
       .center-image img {
         max-width: 80%;
         height: auto;
@@ -69,12 +70,170 @@
   <main class="p-3">
     <h1>Burraco Social Club</h1>
     <h2>Dove le carte uniscono le persone.</h2>
-    <p class="lead">A presto grandi novità!</p>
 
     <!-- Centered Image Section -->
     <div class="center-image">
       <img src="images/burracosocialclub-main.jpg" alt="Gioca, incontra, divertiti">
     </div>
+<!-- BEGIN: Event Calendar -->
+<section id="event-calendar" class="my-5">
+  <h3 class="text-white mb-3">Calendario Eventi</h3>
+  <div id="calendar-container"></div>
+</section>
+
+<style>
+  #calendar-container {
+    background: white;
+    color: black;
+    border-radius: 10px;
+    padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+
+  .calendar-day {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    min-height: 80px;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  .calendar-day.today {
+    background-color: #f7c59f;
+  }
+
+  .calendar-day .event-title {
+    background: #11388c;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    padding: 2px 4px;
+  }
+
+  #event-details {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  #event-details h4 {
+    color: #11388c;
+  }
+
+  #event-details button {
+    background-color: #dd0000;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    .calendar-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+<script>
+  const events = {
+    '2025-11-14': [
+      {
+        title: 'Torneo Escapers Milano',
+        description: 'Le carte sono sul tavolo: è tempo di sfidarsi!',
+        url: 'https://booking.escapersmilano.it/rooms/torneo-burraco/'
+      }
+    ],
+  };
+
+  const container = document.getElementById('calendar-container');
+  const today = new Date();
+  let currentMonth = today.getMonth();
+  let currentYear = today.getFullYear();
+
+  function renderCalendar() {
+    container.innerHTML = `
+      <div class="calendar-header">
+        <button id="prev-month" class="btn btn-sm btn-light">←</button>
+        <h4>${today.toLocaleString('it-IT', { month: 'long' })} ${currentYear}</h4>
+        <button id="next-month" class="btn btn-sm btn-light">→</button>
+      </div>
+      <div class="calendar-grid"></div>
+      <div id="event-details"></div>
+    `;
+
+    const grid = container.querySelector('.calendar-grid');
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const monthDays = lastDay.getDate();
+
+    for (let day = 1; day <= monthDays; day++) {
+      const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const cell = document.createElement('div');
+      cell.classList.add('calendar-day');
+      if (day === today.getDate() && currentMonth === today.getMonth()) cell.classList.add('today');
+      cell.textContent = day;
+
+      if (events[dateStr]) {
+        events[dateStr].forEach(e => {
+          const badge = document.createElement('div');
+          badge.classList.add('event-title');
+          badge.textContent = e.title;
+          cell.appendChild(badge);
+        });
+      }
+
+      cell.addEventListener('click', () => showEventDetails(dateStr));
+      grid.appendChild(cell);
+    }
+
+    container.querySelector('#prev-month').onclick = () => {
+      currentMonth--;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      renderCalendar();
+    };
+    container.querySelector('#next-month').onclick = () => {
+      currentMonth++;
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      renderCalendar();
+    };
+  }
+
+  function showEventDetails(dateStr) {
+    const details = container.querySelector('#event-details');
+    const dayEvents = events[dateStr] || [];
+    if (dayEvents.length === 0) {
+      details.innerHTML = '<p>Nessun evento per questa data.</p>';
+      return;
+    }
+    details.innerHTML = dayEvents.map(e => `
+      <div class="event-detail-box">
+        <h4>${e.title}</h4>
+        <p>${e.description}</p>
+        <button onclick="window.open('${e.url}', '_blank')">Apri Evento</button>
+      </div>
+    `).join('');
+  }
+
+  renderCalendar();
+</script>
+<!-- END: Event Calendar -->
 
     <p class="lead">
 <!-- Begin Brevo Form -->
