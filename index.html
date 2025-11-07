@@ -114,7 +114,7 @@
   }
 
   .calendar-day.today {
-    background-color: #f7c59f;
+    background-color: #ddd;
   }
 
   .calendar-day .event-title {
@@ -128,11 +128,12 @@
 
   #event-details {
     margin-top: 1.5rem;
-    text-align: left;
+    text-align: center;
   }
 
   #event-details h4 {
     color: #11388c;
+    font-weight: bold;
   }
 
   #event-details button {
@@ -171,7 +172,7 @@
     container.innerHTML = `
       <div class="calendar-header">
         <button id="prev-month" class="btn btn-sm btn-light">←</button>
-        <h4>${today.toLocaleString('it-IT', { month: 'long' })} ${currentYear}</h4>
+        <h4>${currentMonth.toLocaleString('it-IT', { month: 'long' })} ${currentYear}</h4>
         <button id="next-month" class="btn btn-sm btn-light">→</button>
       </div>
       <div class="calendar-grid"></div>
@@ -226,7 +227,7 @@
       <div class="event-detail-box">
         <h4>${e.title}</h4>
         <p>${e.description}</p>
-        <button onclick="window.open('${e.url}', '_blank')">Apri Evento</button>
+        <button onclick="window.open('${e.url}', '_blank')">Apri Evento 🗓️</button>
       </div>
     `).join('');
   }
