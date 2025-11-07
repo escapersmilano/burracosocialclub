@@ -5,7 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Burraco Social CLub">
-    <title>Burraco Social CLub</title>
+
+    <meta name="geo.position" content="45.4944397;9.1920556">
+    <meta name="ICBM" content="45.4944397, 9.1920556">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:description" content="Dove le carte uniscono le persone.">
+    <meta name="twitter:title" content="Burraco Social Club - Gioca Incontra Divertiti">
+    <meta name="twitter:image" content="https://burracosocialclub.it/images/burracosocialclub-main.jpg">
+    <meta property="og:site_name" content="Burraco Social Club - Gioca Incontra Divertiti">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:image" itemprop="image" content="https://burracosocialclub.it/images/burracosocialclub-main.jpg">
+    <meta property="og:title" content="Burraco Social Club - Gioca Incontra Divertiti">
+    <meta property="og:description" content="Dove le carte uniscono le persone">
+    <meta property="og:url" content="https://burracosocialclub.it">
+    
+    <title>Burraco Social Club</title>
 
     <link rel="canonical" href="https://burracosocialclub.it/">
 
@@ -232,12 +247,16 @@
       return;
     }
     details.innerHTML = dayEvents.map(e => `
-      <div class="event-detail-box">
+      <div id="event-detail-box" class="event-detail-box">
         <h4>${e.title}</h4>
         <p>${e.description}</p>
         <button onclick="window.open('${e.url}', '_blank')">Apri Evento 🗓️</button>
       </div>
     `).join('');
+    window.scrollTo({
+      top: document.querySelector('.event-detail-box').offsetTop,
+      behavior: 'smooth'  // Adds smooth scrolling effect
+    });
   }
 
   renderCalendar();
