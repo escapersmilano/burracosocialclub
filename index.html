@@ -169,10 +169,18 @@
   let currentYear = today.getFullYear();
 
   function renderCalendar() {
+    const monthIndex = parseInt(currentMonth); // Subtract 1 because months are zero-indexed
+    
+    // Array of month names
+    const months = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giunio", 
+                    "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+    
+    // Get the month name from the array
+    const monthName = months[monthIndex];
     container.innerHTML = `
       <div class="calendar-header">
         <button id="prev-month" class="btn btn-sm btn-light">←</button>
-        <h4>${currentMonth.toLocaleString('it-IT', { month: 'long' })} ${currentYear}</h4>
+        <h4>${monthName} ${currentYear}</h4>
         <button id="next-month" class="btn btn-sm btn-light">→</button>
       </div>
       <div class="calendar-grid"></div>
