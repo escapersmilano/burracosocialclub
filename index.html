@@ -251,12 +251,10 @@
         <h4>${e.title}</h4>
         <p>${e.description}</p>
         <button onclick="window.open('${e.url}', '_blank')">Apri Evento 🗓️</button>
+        <br/>
       </div>
     `).join('');
-    window.scrollTo({
-      top: document.querySelector('.event-detail-box').offsetTop,
-      behavior: 'smooth'  // Adds smooth scrolling effect
-    });
+    
   }
 
   renderCalendar();
